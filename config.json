@@ -1,0 +1,15 @@
+{
+  "taskdb": "sqlalchemy+postgresql+taskdb://pyspider@127.0.0.1:5432/taskdb",
+  "projectdb": "sqlalchemy+postgresql+projectdb://pyspider@127.0.0.1:5432/projectdb",
+  "resultdb": "sqlalchemy+postgresql+resultdb://pyspider@127.0.0.1:5432/resultdb",
+  "message_queue": "redis://127.0.0.1:6379/1",
+  "phantomjs-proxy": "127.0.0.1:25555",
+  "scheduler" : {
+    "inqueue-limit": 5000,
+    "delete-time": 43200
+  },
+  "webui": {
+    "port": 5000,
+    "need-auth": false
+  }
+}
