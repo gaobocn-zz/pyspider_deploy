@@ -1,12 +1,17 @@
+#!/bin/bash
+
 ##########################################
+sudo apt-get update
 # needed by pycurl
 sudo apt-get install libcurl4-openssl-dev
 # needed by psycopg2
 apt-get install libpq-dev
 # we need Python.h
-apt-get install python3-dev
+apt-get install python-dev python-pip
 #we need libxml/xmlversion.h
 sudo apt-get install libxml2-dev libxslt1-dev python-lxml
+
+pip install virtualenv
 
 ##########################################
 Install phantomjs
@@ -26,19 +31,22 @@ sudo ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin
 phantomjs --version # phantomjs installed
 
 ##########################################
-virtualenv --python=python3 spider_env
-source spider_env/bin/activate
-cd spider_env
+cd ~/pyspider_deploy
+virtualenv --python=python .spider_env
+source .spider_env/bin/activate
+cd .spider_env
 git clone https://github.com/Matt-Zhang/PyCrawler.git
-cd pyspider
+cd PyCrawler
 
-(change the mysql-connector-python in requirements.txt to mysql-connector-python-rf)
+# (change the mysql-connector-python in requirements.txt to mysql-connector-python-rf)
 pip install -r requirements.txt
-python3 setup.py install # this step uses a lot of memory (at least 500M is not enough, solved by adding swap file)
+python setup.py install # this step uses a lot of memory (at least 500M is not enough, solved by adding swap file)
 
 pyspider --version # setup finished
+
+pip install fabric
 
 ##########################################
 cp ../../config.json ./
 # we can use config file to start one part at a time, e.g. "pyspider -c config.json processor"
-pyspider -c config.json &
+# pyspider -c config.json &
